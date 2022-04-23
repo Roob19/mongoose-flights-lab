@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+
 const flightsCtrl = require('../controllers/flights');
 
-/* GET flights listing. */
-router.get('/new', flightsCtrl.new);
+// if user visits http://localhost:3000/new
+router.post('/', flightsCtrl.new);
 
 module.exports = router;
