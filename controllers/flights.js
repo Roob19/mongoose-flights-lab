@@ -4,7 +4,21 @@ function newFlight (req, res) {
     res.render('flights/new');
 }
 
-function indexFlights(req, res) {
+function create (req, res) {
+    req.body.departs = !!req.body.departs;
+    if (req.body.flightNo) {
+        const flight = new Flight(req.body);
+        flight.save(function(error){
+            if (error) {
+                return res.render('flights/new');
+            }
+            res.redirect('flights');
+        });
+    }
+
+}
+
+function indexFlights (req, res) {
     Flight.find({}, function (err, flight) {
         res.render('flights/index', {
             flight
@@ -15,5 +29,6 @@ function indexFlights(req, res) {
 // keep below functions
 module.exports = {
     new : newFlight, 
-    indexFlights
+    create,
+    index : indexFlights
 };
