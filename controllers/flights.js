@@ -5,7 +5,7 @@ function newFlight (req, res) {
 }
 
 function create (req, res) {
-    req.body.departs = !!req.body.departs;
+    // req.body.departs = !!req.body.departs;
     if (req.body.flightNo) {
         const flight = new Flight(req.body);
         flight.save(function(error){
@@ -15,7 +15,6 @@ function create (req, res) {
             res.redirect('flights');
         });
     }
-
 }
 
 function indexFlights (req, res) {
