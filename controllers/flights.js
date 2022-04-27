@@ -1,43 +1,53 @@
 const Flight = require("../models/flight");
+const Destination = require("../models/destination");
+const Ticket = require("../models/ticket");
 
 function newFlight(req, res) {
-    const addFlight = new Flight();
-
-    // const dt = addFlight.departs;
-    // let departsDate = dt.toISOString().slice(0, 16);
-
-//   const defaultFlights = new Flight();
-//   const dt = defaultFlights.departs;
-//   let departsDate = `${dt.getFullYear()}-${(dt.getMonth() + 1)
-//     .toString()
-//     .padStart(2, "0")}`;
-//   departsDate += `-${dt.getDate().toString().padStart(2, "0")}T${dt
-//     .toTimeString()
-//     .slice(0, 5)}`;
-//   res.render("flights/new", { departsDate });
-
-    res.render("flights/new", {addFlight});
+  res.render("flights/new", { title: "Add Flight" });
 }
 
 function create(req, res) {
-  // req.body.departs = !!req.body.departs;
-  if (req.body.flightNo) {
-    const flight = new Flight(req.body);
-    flight.save(function (error) {
-      if (error) {
-        return res.render("flights/new");
-      }
-      res.redirect("flights");
-    });
+  req.body.departs = !!req.body.departs;
+  for (let key in req.body) {
+    if (req.body[key] === "") delete req.body[key];
   }
+  const flight = new Flight(req.body);
+  flight.save(function (error) {
+    if (error) return res.redirect("/flights/new");
+    res.redirect(`/flights/${flight._id}`);
+  });
 }
 
 function indexFlights(req, res) {
   Flight.find({}, function (err, flight) {
     res.render("flights/index", {
+      title: "All Flights",
       flight,
     });
   });
+}
+
+function show(req, res) {
+  Flight.findById(req.params.id)
+    .populate("destinations")
+    .exec(function (error, flight) {
+      Destination.find({ _id: { $nin: flight.destinations } }).exec(function (
+        err,
+        dest
+      ) {
+        Ticket.find({ _id: { $nin: flight.tickets } }).exec(function (
+          err,
+          ticket
+        ) {
+          res.render("flights/show", {
+            title: "Flight Detail",
+            flight,
+            dest,
+            ticket,
+          });
+        });
+      });
+    });
 }
 
 // keep below functions
@@ -45,4 +55,5 @@ module.exports = {
   new: newFlight,
   create,
   index: indexFlights,
+  show,
 };

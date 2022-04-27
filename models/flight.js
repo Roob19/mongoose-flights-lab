@@ -1,18 +1,5 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
-const reviewSchema = new Schema ({
-    content : String,
-    rating : {
-        type: Number,
-        min: 1,
-        max: 5,
-        default: 5
-    }
-}, {
-    timestamps: true
-});
 
 const flightSchema = new Schema ({
     airline : {
@@ -31,14 +18,26 @@ const flightSchema = new Schema ({
     departs : {
         type: Date, 
         default: function() {
-            // let dt = new Date();
+            return new Date().getFullYear();
+            // const date = new Date;
             // const addYear = date.getFullYear()+1;
-            // date.setFullYear(dt.addYear);
+            // date.setFullYear(addYear);
+            // const dt = new Date();
+            // const year = date.getFullYear();
+            // dt.setFullYear(year+1);
             // return dt;
-            return new Date(new Date().setFullYear(new Date().getFullYear()+1));
+
+            // return new Date(new Date().setFullYear(new Date().getFullYear()+1));
         }
     },
-    reviews : [reviewSchema]
+    destinations : [{
+        type: Schema.Types.ObjectId,
+        ref: 'Destination'
+    }],
+    tickets : [{
+        type: Schema.Types.ObjectId,
+        ref: 'Ticket'
+    }]
 }, {
     timestamps : true
 });

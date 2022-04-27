@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="../../public/javascripts/script.js"></script>
-    <title>Add a flight</title>
-</head>
-<body>
+<%- include('../partials/header') %>
+
     <h2>Enter a New Flight</h2>
 <form action="/flights" method="POST">
   <label>Airline:
@@ -20,7 +11,7 @@
         <option value="PrivateCharter">PrivateCharter</option>
       </select>
   </label><br>
-  <label>Airport
+  <label>Airport:
     <select name="airport">
         <option value="AUS">AUS</option>
         <option value="DEN" selected>DEN</option>
@@ -38,24 +29,24 @@
   <label>Departure:
     <input type="datetime-local" name="departs">
   </label><br>
+  <label>Destination:
+    <select name="airport">
+        <option value="n/a" selected></option>
+        <option value="AUS">AUS</option>
+        <option value="DEN">DEN</option>
+        <option value="DFW">DFW</option>
+        <option value="LAX">LAX</option>
+        <option value="MHR">MHR</option>
+        <option value="SAN">SAN</option>
+        <option value="SFO">SFO</option>
+        <option value="SMF">SMF</option>
+    </select>
+    <input type="datetime-local" name="arrival">
+  </label><br>
   <input type="submit" value="Add Flight"></input>
 </form>
-
-<br><br><h2>Reviews</h2>
-<form id="add-review-form" method="POST"
-  action="/flights/<%= flight._id %>/reviews">
-  <label>Review:</label>
-  <textarea name="content"></textarea>
-  <label>Rating:</label>
-  <select name="rating">
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5" selected>5</option>
-  </select>
-  <input type="submit" value="Add Review">
+</main>
 <br><br>
     <a href="/flights/index">View All Flights</a>
-</body>
-</html>
+
+<%- include('../partials/footer') %>
