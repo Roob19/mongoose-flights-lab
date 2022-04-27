@@ -1,6 +1,5 @@
 <%- include('../partials/header') %>
 
-  <h1>Flights List</h1>
   <table>
     <thead>
       <tr>
@@ -8,7 +7,8 @@
         <th>Airport</th>
         <th>Flight Number</th>
         <th>Departs</th>
-        <th>Arrival</th>
+        <th>Destinations</th>
+        <th>Tickets</th>
       </tr>
     </thead>
     <tbody>
@@ -18,12 +18,12 @@
           <td><%= f.airport %></td>
           <td><%= f.flightNo %></td>
           <td><%= f.departs %></td>
-          <td><%= f.arrival %></td>
+          <td><%= f.destinations %></td>
+          <td><%= f.tickets %></td>
         </tr>
         <% }); %>
     </tbody>
 </table>
 <br><br>
-    <a href="/new">Add a flight</a>
 
 <%- include('../partials/footer') %>

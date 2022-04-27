@@ -1,7 +1,7 @@
 <%- include('../partials/header') %>
 
     <h2>Enter a New Flight</h2>
-<form action="/flights" method="POST">
+<form id="new-form" action="/flights" method="POST">
   <label>Airline:
     <select name="airline">
         <option value="n/a" selected></option>
@@ -43,10 +43,17 @@
     </select>
     <input type="datetime-local" name="arrival">
   </label><br>
+
+    <label>Seat:
+        <input name="seat" pattern="/[A-F][1-9]\d?/"></input>
+    </label><br>
+    <label>Price: 
+        <input type="number" name="price" min="0">
+    </label><br>
+
   <input type="submit" value="Add Flight"></input>
 </form>
 </main>
 <br><br>
-    <a href="/flights/index">View All Flights</a>
 
 <%- include('../partials/footer') %>
